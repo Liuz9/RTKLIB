@@ -241,31 +241,33 @@ const char *formatstrs[32]={    /* stream format strings */
 };
 static char *obscodes[]={       /* observation code strings */
     
-    ""  ,"1C","1P","1W","1Y", "1M","1N","1S","1L","1E", /*  0- 9 */
-    "1A","1B","1X","1Z","2C", "2D","2S","2L","2X","2P", /* 10-19 */
-    "2W","2Y","2M","2N","5I", "5Q","5X","7I","7Q","7X", /* 20-29 */
-    "6A","6B","6C","6X","6Z", "6S","6L","8L","8Q","8X", /* 30-39 */
-    "2I","2Q","6I","6Q","3I", "3Q","3X","1I","1Q","5A", /* 40-49 */
-    "5B","5C","9A","9B","9C", "9X",""  ,""  ,""  ,""    /* 50-59 */
+    ""  ,"1C","1P","1D","1W", "1Y","1M","1N","1S","1L", /*  0- 9 */
+    "1E","1A","1B","1X","1Z", "2C","2D","2S","2L","2X", /* 10-19 */
+    "2P","2W","2Y","2M","2N", "5I","5Q","5P","5D","5X", /* 20-29 */
+    "7I","7Q","7P","7D","7X", "7Z","6A","6B","6C","6X", /* 30-39 */
+    "6Z","6S","6L","8L","8Q", "8X","2I","2Q","6I","6Q", /* 40-49 */
+    "3I","3Q","3X","1I","1Q", "5A","5B","5C","9A","9B", /* 50-59 */
+    "9C", "9X",""  ,""  ,"" , ""  ,""  ,""  ,""  ,""    /* 60-69 */
 };
 static unsigned char obsfreqs[]={
-    /* 1:L1/E1, 2:L2/B1, 3:L5/E5a/L3, 4:L6/LEX/B3, 5:E5b/B2, 6:E5(a+b), 7:S */
+    /* 1:L1/E1/B1C, 2:L2/B1, 3:L5/E5a/L3/B2a, 4:L6/LEX/B3, 5:E5b/B2, 6:E5(a+b), 7:S */
     0, 1, 1, 1, 1,  1, 1, 1, 1, 1, /*  0- 9 */
-    1, 1, 1, 1, 2,  2, 2, 2, 2, 2, /* 10-19 */
-    2, 2, 2, 2, 3,  3, 3, 5, 5, 5, /* 20-29 */
-    4, 4, 4, 4, 4,  4, 4, 6, 6, 6, /* 30-39 */
-    2, 2, 4, 4, 3,  3, 3, 1, 1, 3, /* 40-49 */
-    3, 3, 7, 7, 7,  7, 0, 0, 0, 0  /* 50-59 */
+    1, 1, 1, 1, 1,  2, 2, 2, 2, 2, /* 10-19 */
+    2, 2, 2, 2, 2,  3, 3, 3, 3, 3, /* 20-29 */
+    5, 5, 5, 5, 5,  5, 4, 4, 4, 4, /* 30-39 */
+    4, 4, 4, 6, 6,  6, 2, 2, 4, 4, /* 40-49 */
+    4, 3, 3, 1, 1,  3, 3, 3, 7, 7, /* 50-59 */
+    7, 7, 0, 0, 0,  0, 0, 0, 0, 0  /* 60-69 */
 };
 static char codepris[7][MAXFREQ][16]={  /* code priority table */
    
-   /* L1/E1      L2/B1        L5/E5a/L3 L6/LEX/B3 E5b/B2    E5(a+b)  S */
+   /* L1/E1/B1C    L2/B1        L5/E5a/L3/B2a L6/LEX/B3 E5b/B2    E5(a+b)  S */
     {"CPYWMNSL","PYWCMNDSLX","IQX"     ,""       ,""       ,""      ,""    }, /* GPS */
     {"PC"      ,"PC"        ,"IQX"     ,""       ,""       ,""      ,""    }, /* GLO */
     {"CABXZ"   ,""          ,"IQX"     ,"ABCXZ"  ,"IQX"    ,"IQX"   ,""    }, /* GAL */
     {"CSLXZ"   ,"SLX"       ,"IQX"     ,"SLX"    ,""       ,""      ,""    }, /* QZS */
     {"C"       ,""          ,"IQX"     ,""       ,""       ,""      ,""    }, /* SBS */
-    {"IQX"     ,"IQX"       ,"IQX"     ,"IQX"    ,"IQX"    ,""      ,""    }, /* BDS */
+    {"DPX"     ,"IQX"       ,"DPX"     ,"IQX"    ,"IQXDPX" ,""      ,""    }, /* BDS */
     {""        ,""          ,"ABCX"    ,""       ,""       ,""      ,"ABCX"}  /* IRN */
 };
 static fatalfunc_t *fatalfunc=NULL; /* fatal callback function */
@@ -3334,6 +3336,8 @@ extern double satwavelen(int sat, int frq, const nav_t *nav)
         if      (frq==0) return CLIGHT/FREQ1_CMP; /* B1 */
         else if (frq==1) return CLIGHT/FREQ2_CMP; /* B2 */
         else if (frq==2) return CLIGHT/FREQ3_CMP; /* B3 */
+        else if (frq==3) return CLIGHT/FREQ5; /* B2a */
+        else if (frq==4) return CLIGHT/FREQ1; /* B1C */ 
     }
     else if (sys==SYS_GAL) {
         if      (frq==0) return CLIGHT/FREQ1; /* E1 */

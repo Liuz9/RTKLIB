@@ -101,9 +101,9 @@ const char *msm_sig_sbs[32]={
 };
 const char *msm_sig_cmp[32]={
     /* BeiDou: ref [15] table 3.5-106 */
-    ""  ,"1I","1Q","1X",""  ,""  ,""  ,"6I","6Q","6X",""  ,""  ,
-    ""  ,"7I","7Q","7X",""  ,""  ,""  ,""  ,""  ,""  ,""  ,""  ,
-    ""  ,""  ,""  ,""  ,""  ,""  ,""  ,""
+    ""  ,"2I","2Q","2X",""  ,""  ,""  ,"6I","6Q","6X",""  ,""  ,
+    ""  ,"7I","7Q","7X",""  ,""  ,""  ,""  ,""  ,"5D","5P","5X",
+    "7D",""  ,""  ,""  ,""  ,"1D","1P","1X"
 };
 /* ssr update intervals ------------------------------------------------------*/
 static const double ssrudint[16]={
@@ -1366,8 +1366,9 @@ static const int codes_qzs[]={
     CODE_L5X,CODE_L6S,CODE_L6L,CODE_L6X,CODE_L1X
 };
 static const int codes_bds[]={
-    CODE_L1I,CODE_L1Q,CODE_L1X,CODE_L7I,CODE_L7Q,CODE_L7X,CODE_L6I,CODE_L6Q,
-    CODE_L6X
+    CODE_L2I,CODE_L2Q,CODE_L2X,CODE_L7I,CODE_L7Q,CODE_L7X,CODE_L6I,CODE_L6Q,
+    CODE_L6X,CODE_L5P,CODE_L5D,CODE_L5X,CODE_L1D,CODE_L1P,CODE_L1X,CODE_L7D,
+    CODE_L7P,CODE_L7Z
 };
 static const int codes_sbs[]={
     CODE_L1C,CODE_L5I,CODE_L5Q,CODE_L5X
@@ -1826,8 +1827,11 @@ static void save_msm_obs(rtcm_t *rtcm, int sys, msm_h_t *h, const double *r,
         
         /* freqency index for beidou and galileo */
         if (sys==SYS_CMP) {
-            if      (freq[i]==5) freq[i]=2; /* B2 */
+            if (freq[i]==2) freq[i]=1; /* B1 */
+            else if (freq[i]==5) freq[i]=2; /* B2 */
             else if (freq[i]==4) freq[i]=3; /* B3 */
+            else if (freq[i]==3) freq[i]=4; /* B2a */
+            else if (freq[i]==1) freq[i]=5; /* B1C */
         }
         else if (sys==SYS_GAL) {
             if (freq[i]==5) freq[i]=2; /* E5b */

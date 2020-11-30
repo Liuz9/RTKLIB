@@ -176,7 +176,7 @@ extern "C" {
 #endif
 #ifdef ENACMP
 #define MINPRNCMP   1                   /* min satellite sat number of BeiDou */
-#define MAXPRNCMP   37                  /* max satellite sat number of BeiDou */
+#define MAXPRNCMP   63                  /* max satellite sat number of BeiDou */
 #define NSATCMP     (MAXPRNCMP-MINPRNCMP+1) /* number of BeiDou satellites */
 #define NSYSCMP     1
 #else
@@ -282,61 +282,67 @@ extern "C" {
 
 #define CODE_NONE   0                   /* obs code: none or unknown */
 #define CODE_L1C    1                   /* obs code: L1C/A,G1C/A,E1C (GPS,GLO,GAL,QZS,SBS) */
-#define CODE_L1P    2                   /* obs code: L1P,G1P    (GPS,GLO) */
-#define CODE_L1W    3                   /* obs code: L1 Z-track (GPS) */
-#define CODE_L1Y    4                   /* obs code: L1Y        (GPS) */
-#define CODE_L1M    5                   /* obs code: L1M        (GPS) */
-#define CODE_L1N    6                   /* obs code: L1codeless (GPS) */
-#define CODE_L1S    7                   /* obs code: L1C(D)     (GPS,QZS) */
-#define CODE_L1L    8                   /* obs code: L1C(P)     (GPS,QZS) */
-#define CODE_L1E    9                   /* (not used) */
-#define CODE_L1A    10                  /* obs code: E1A        (GAL) */
-#define CODE_L1B    11                  /* obs code: E1B        (GAL) */
-#define CODE_L1X    12                  /* obs code: E1B+C,L1C(D+P) (GAL,QZS) */
-#define CODE_L1Z    13                  /* obs code: E1A+B+C,L1SAIF (GAL,QZS) */
-#define CODE_L2C    14                  /* obs code: L2C/A,G1C/A (GPS,GLO) */
-#define CODE_L2D    15                  /* obs code: L2 L1C/A-(P2-P1) (GPS) */
-#define CODE_L2S    16                  /* obs code: L2C(M)     (GPS,QZS) */
-#define CODE_L2L    17                  /* obs code: L2C(L)     (GPS,QZS) */
-#define CODE_L2X    18                  /* obs code: L2C(M+L),B1I+Q (GPS,QZS,CMP) */
-#define CODE_L2P    19                  /* obs code: L2P,G2P    (GPS,GLO) */
-#define CODE_L2W    20                  /* obs code: L2 Z-track (GPS) */
-#define CODE_L2Y    21                  /* obs code: L2Y        (GPS) */
-#define CODE_L2M    22                  /* obs code: L2M        (GPS) */
-#define CODE_L2N    23                  /* obs code: L2codeless (GPS) */
-#define CODE_L5I    24                  /* obs code: L5/E5aI    (GPS,GAL,QZS,SBS) */
-#define CODE_L5Q    25                  /* obs code: L5/E5aQ    (GPS,GAL,QZS,SBS) */
-#define CODE_L5X    26                  /* obs code: L5/E5aI+Q/L5B+C (GPS,GAL,QZS,IRN,SBS) */
-#define CODE_L7I    27                  /* obs code: E5bI,B2I   (GAL,CMP) */
-#define CODE_L7Q    28                  /* obs code: E5bQ,B2Q   (GAL,CMP) */
-#define CODE_L7X    29                  /* obs code: E5bI+Q,B2I+Q (GAL,CMP) */
-#define CODE_L6A    30                  /* obs code: E6A        (GAL) */
-#define CODE_L6B    31                  /* obs code: E6B        (GAL) */
-#define CODE_L6C    32                  /* obs code: E6C        (GAL) */
-#define CODE_L6X    33                  /* obs code: E6B+C,LEXS+L,B3I+Q (GAL,QZS,CMP) */
-#define CODE_L6Z    34                  /* obs code: E6A+B+C    (GAL) */
-#define CODE_L6S    35                  /* obs code: LEXS       (QZS) */
-#define CODE_L6L    36                  /* obs code: LEXL       (QZS) */
-#define CODE_L8I    37                  /* obs code: E5(a+b)I   (GAL) */
-#define CODE_L8Q    38                  /* obs code: E5(a+b)Q   (GAL) */
-#define CODE_L8X    39                  /* obs code: E5(a+b)I+Q (GAL) */
-#define CODE_L2I    40                  /* obs code: B1I        (BDS) */
-#define CODE_L2Q    41                  /* obs code: B1Q        (BDS) */
-#define CODE_L6I    42                  /* obs code: B3I        (BDS) */
-#define CODE_L6Q    43                  /* obs code: B3Q        (BDS) */
-#define CODE_L3I    44                  /* obs code: G3I        (GLO) */
-#define CODE_L3Q    45                  /* obs code: G3Q        (GLO) */
-#define CODE_L3X    46                  /* obs code: G3I+Q      (GLO) */
-#define CODE_L1I    47                  /* obs code: B1I        (BDS) */
-#define CODE_L1Q    48                  /* obs code: B1Q        (BDS) */
-#define CODE_L5A    49                  /* obs code: L5A SPS    (IRN) */
-#define CODE_L5B    50                  /* obs code: L5B RS(D)  (IRN) */
-#define CODE_L5C    51                  /* obs code: L5C RS(P)  (IRN) */
-#define CODE_L9A    52                  /* obs code: SA SPS     (IRN) */
-#define CODE_L9B    53                  /* obs code: SB RS(D)   (IRN) */
-#define CODE_L9C    54                  /* obs code: SC RS(P)   (IRN) */
-#define CODE_L9X    55                  /* obs code: SB+C       (IRN) */
-#define MAXCODE     55                  /* max number of obs code */
+#define CODE_L1P    2                   /* obs code: L1P,G1P,B1C     (GPS,GLO,BDS) */
+#define CODE_L1D    3                   /* obs code: B1C        (BDS) */
+#define CODE_L1W    4                   /* obs code: L1 Z-track (GPS) */
+#define CODE_L1Y    5                   /* obs code: L1Y        (GPS) */
+#define CODE_L1M    6                   /* obs code: L1M        (GPS) */
+#define CODE_L1N    7                   /* obs code: L1codeless (GPS) */
+#define CODE_L1S    8                   /* obs code: L1C(D)     (GPS,QZS) */
+#define CODE_L1L    9                   /* obs code: L1C(P)     (GPS,QZS) */
+#define CODE_L1E    10                  /* (not used) */
+#define CODE_L1A    11                  /* obs code: E1A        (GAL) */
+#define CODE_L1B    12                  /* obs code: E1B        (GAL) */
+#define CODE_L1X    13                  /* obs code: E1B+C,L1C(D+P),B1C (GAL,QZS,BDS) */
+#define CODE_L1Z    14                  /* obs code: E1A+B+C,L1SAIF (GAL,QZS) */
+#define CODE_L2C    15                  /* obs code: L2C/A,G1C/A (GPS,GLO) */
+#define CODE_L2D    16                  /* obs code: L2 L1C/A-(P2-P1) (GPS) */
+#define CODE_L2S    17                  /* obs code: L2C(M)     (GPS,QZS) */
+#define CODE_L2L    18                  /* obs code: L2C(L)     (GPS,QZS) */
+#define CODE_L2X    19                  /* obs code: L2C(M+L),B1I+Q (GPS,QZS,CMP) */
+#define CODE_L2P    20                  /* obs code: L2P,G2P    (GPS,GLO) */
+#define CODE_L2W    21                  /* obs code: L2 Z-track (GPS) */
+#define CODE_L2Y    22                  /* obs code: L2Y        (GPS) */
+#define CODE_L2M    23                  /* obs code: L2M        (GPS) */
+#define CODE_L2N    24                  /* obs code: L2codeless (GPS) */
+#define CODE_L5I    25                  /* obs code: L5/E5aI    (GPS,GAL,QZS,SBS) */
+#define CODE_L5Q    26                  /* obs code: L5/E5aQ    (GPS,GAL,QZS,SBS) */
+#define CODE_L5P    27                  /* obs code: B2a        (BDS) */
+#define CODE_L5D    28                  /* obs code: B2a        (BDS) */
+#define CODE_L5X    29                  /* obs code: L5/E5aI+Q/L5B+C/B2a (GPS,GAL,QZS,IRN,SBS,BDS) */
+#define CODE_L7I    30                  /* obs code: E5bI,B2I   (GAL,CMP) */
+#define CODE_L7Q    31                  /* obs code: E5bQ,B2Q   (GAL,CMP) */
+#define CODE_L7P    32                  /* obs code: B2b        (BDS) */
+#define CODE_L7D    33                  /* obs code: B2b        (BDS) */
+#define CODE_L7X    34                  /* obs code: E5bI+Q,B2I+Q (GAL,CMP) */
+#define CODE_L7Z    35                  /* obs code: B2b        (BDS) */
+#define CODE_L6A    36                  /* obs code: E6A        (GAL) */
+#define CODE_L6B    37                  /* obs code: E6B        (GAL) */
+#define CODE_L6C    38                  /* obs code: E6C        (GAL) */
+#define CODE_L6X    39                  /* obs code: E6B+C,LEXS+L,B3I+Q (GAL,QZS,CMP) */
+#define CODE_L6Z    40                  /* obs code: E6A+B+C    (GAL) */
+#define CODE_L6S    41                  /* obs code: LEXS       (QZS) */
+#define CODE_L6L    42                  /* obs code: LEXL       (QZS) */
+#define CODE_L8I    43                  /* obs code: E5(a+b)I   (GAL) */
+#define CODE_L8Q    44                  /* obs code: E5(a+b)Q   (GAL) */
+#define CODE_L8X    45                  /* obs code: E5(a+b)I+Q (GAL) */
+#define CODE_L2I    46                  /* obs code: B1I        (BDS) */
+#define CODE_L2Q    47                  /* obs code: B1Q        (BDS) */
+#define CODE_L6I    48                  /* obs code: B3I        (BDS) */
+#define CODE_L6Q    49                  /* obs code: B3Q        (BDS) */
+#define CODE_L3I    50                  /* obs code: G3I        (GLO) */
+#define CODE_L3Q    51                  /* obs code: G3Q        (GLO) */
+#define CODE_L3X    52                  /* obs code: G3I+Q      (GLO) */
+#define CODE_L1I    53                  /* obs code: B1I        (BDS) */
+#define CODE_L1Q    54                  /* obs code: B1Q        (BDS) */
+#define CODE_L5A    55                  /* obs code: L5A SPS    (IRN) */
+#define CODE_L5B    56                  /* obs code: L5B RS(D)  (IRN) */
+#define CODE_L5C    57                  /* obs code: L5C RS(P)  (IRN) */
+#define CODE_L9A    58                  /* obs code: SA SPS     (IRN) */
+#define CODE_L9B    59                  /* obs code: SB RS(D)   (IRN) */
+#define CODE_L9C    60                  /* obs code: SC RS(P)   (IRN) */
+#define CODE_L9X    61                  /* obs code: SB+C       (IRN) */
+#define MAXCODE     61                  /* max number of obs code */
 
 #define PMODE_SINGLE 0                  /* positioning mode: single */
 #define PMODE_DGPS   1                  /* positioning mode: DGPS/DGNSS */
